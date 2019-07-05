@@ -216,6 +216,16 @@ func (s *systemd) Run() (err error) {
 }
 
 func (s *systemd) Status() (Status, error) {
+
+	confPath, err := s.configPath()
+	if err != nil {
+		return StatusUnknown, err
+	}
+	_, err = os.Stat(confPath)
+	if err == nil {
+		return StatusUnknown, ErrNotInstalled
+	}
+
 	exitCode, out, err := runWithOutput("systemctl", "is-active", s.Name)
 	if exitCode == 0 && err != nil {
 		return StatusUnknown, err
