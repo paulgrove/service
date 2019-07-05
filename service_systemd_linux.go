@@ -222,7 +222,7 @@ func (s *systemd) Status() (Status, error) {
 		return StatusUnknown, err
 	}
 	_, err = os.Stat(confPath)
-	if err == nil {
+	if err != nil {
 		return StatusUnknown, ErrNotInstalled
 	}
 
