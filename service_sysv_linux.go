@@ -69,7 +69,7 @@ func (s *sysv) Install() error {
 		return err
 	}
 	_, err = os.Stat(confPath)
-	if err != nil {
+	if err == nil {
 		return fmt.Errorf("Init already exists: %s", confPath)
 	}
 
